@@ -28,8 +28,6 @@ def webhooks():
         channel = "#random"
         project_name = "Launchpad Slack"
 
-        title = "New commit has been pushed"
-
         fields = []
 
         fields.append({
@@ -38,12 +36,22 @@ def webhooks():
             'short': True,
         })
 
+        if lp_event == 'bzr:push:0.1':
+            title = "New bzr commit has been pushed"
+            title_link = "http://bazaar.launchpad.net/%s/revision/%s" % (
+                request.json['bzr_branch_path'], request.json['new']['revision_id'])
+
+        if lp_event == 'git:push:0.1':
+            title = "New git commit has been pushed"
+            title_link = "https://git.launchpad.net/%s/commit/?id=%s" % (
+                request.json['git_repository'], request.json['commit_sha1'])
+
         payload = {
             'parse': 'none',
             'attachments': [{
                 'fallback': '[%s] %s' % (project_name, title),
                 'title': title,
-                'title_link': "http://bazaar.launchpad.net/%s/revision/%s" % (request.json['bzr_branch_path'], request.json['new']['revision_id']),
+                'title_link': title_link,
                 'color': "#36a64f",
                 'fields': fields,
             }]
