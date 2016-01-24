@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
-import os
 
 from flask import Flask, request, Response, redirect
 from utils import lp_login, _sort
+
+import os
+import simplejson
+import requests
 
 app = Flask(__name__)
 
@@ -16,9 +19,51 @@ ALLOWED_EVENTS = [
 
 @app.route('/webhook', methods=['post'])
 def webhooks():
-    #print request.json
-    print request.headers.get('X-Launchpad-Event-Type')
-    return Response("OK", content_type='text/plain; charset=utf-8')
+    # print request.json
+    lp_event = request.headers.get('X-Launchpad-Event-Type')
+    if lp_event is not None and lp in ALLOWED_EVENTS:
+
+        webhook = "https://hooks.slack.com/services/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"
+        username = 'Launchpad'
+        icon_url = "https://launchpadlibrarian.net/50084288/launchpad-logo"
+        channel = "#random"
+        project_name = "Launchpad Slack"
+
+        title = "New commit has been pushed"
+
+        fields = []
+
+        fields.append({
+            'title': 'Project',
+            'value': project_name,
+            'short': True,
+        })
+
+        payload = {
+            'parse': 'none',
+            'attachments': [{
+                'fallback': '[%s] %s' % (project_name, title),
+                'title': title,
+                'title_link': "http://bazaar.launchpad.net/%s/revision/%s" % (request.json['bzr_branch_path'], request.json['new']['revision_id']),
+                'color': "#36a64f",
+                'fields': fields,
+            }]
+        }
+
+        if username:
+            payload['username'] = username.encode('utf-8')
+
+        if channel:
+            payload['channel'] = channel
+
+        if icon_url:
+            payload['icon_url'] = icon_url
+
+        values = {'payload': simplejson.dumps(payload)}
+
+        return requests.post(webhook, data=values)
+    else:
+        return Response("Event not Allowed", content_type='text/plain; charset=utf-8')
 
 
 @app.route('/lp', methods=['get'])
