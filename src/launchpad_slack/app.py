@@ -22,7 +22,7 @@ def webhooks():
     # print request.json
     lp_event = request.headers.get('X-Launchpad-Event-Type')
     if lp_event is not None and lp in ALLOWED_EVENTS:
-
+        print "test"
         webhook = "https://hooks.slack.com/services/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"
         username = 'Launchpad'
         icon_url = "https://launchpadlibrarian.net/50084288/launchpad-logo"
