@@ -6,16 +6,19 @@ from utils import lp_login, _sort
 
 app = Flask(__name__)
 
+ALLOWED_EVENTS = [
+    'bzr:push:0.1',
+    'git:push:0.1',
+    'merge-proposal:0.1',
+    'ping'
+]
 
-@app.route('/webhook', methods=['get', 'post'])
+
+@app.route('/webhook', methods=['post'])
 def webhooks():
-    from pprint import pprint
-    pprint(request.__dict__)
-    print "########"
-    request.data
-    print "########"
-    print request.form
-    return Response(pprint(request.__dict__), content_type='text/plain; charset=utf-8')
+    #print request.json
+    print request.headers.get('X-Launchpad-Event-Type')
+    return Response("OK", content_type='text/plain; charset=utf-8')
 
 
 @app.route('/lp', methods=['get'])
