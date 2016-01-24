@@ -2,7 +2,7 @@
 import os
 
 from flask import Flask, request, Response, redirect
-from .utils import lp_login, _sort
+from utils import lp_login, _sort
 
 app = Flask(__name__)
 
