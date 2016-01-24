@@ -10,8 +10,8 @@ app = Flask(__name__)
 @app.route('/webhook', methods=['get', 'post'])
 def webhooks():
     from pprint import pprint
-    pprint(request.values)
-    return request.values
+    pprint (request.__dict__)
+    return Response(pprint(request.__dict__), content_type='text/plain; charset=utf-8')
 
 
 @app.route('/lp', methods=['get'])
