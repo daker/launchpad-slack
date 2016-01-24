@@ -7,7 +7,7 @@ from utils import lp_login, _sort
 app = Flask(__name__)
 
 
-@app.route('/lp', methods=['get', 'post'])
+@app.route('/webhook', methods=['get', 'post'])
 def webhooks():
     from pprint import pprint
     pprint(str(request.values))
