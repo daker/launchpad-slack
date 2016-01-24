@@ -46,6 +46,10 @@ def webhooks():
             title_link = "https://git.launchpad.net/%s/commit/?id=%s" % (
                 request.json['git_repository'], request.json['commit_sha1'])
 
+        if lp_event == 'merge-proposal:0.1':
+            title = "New merge request has been proposed"
+            title_link = "%s" % request.json['merge_proposal']
+
         payload = {
             'parse': 'none',
             'attachments': [{
