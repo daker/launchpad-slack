@@ -60,8 +60,9 @@ def webhooks():
             payload['icon_url'] = icon_url
 
         values = {'payload': simplejson.dumps(payload)}
+        requests.post(webhook, data=values)
 
-        return requests.post(webhook, data=values)
+        return Response("OK", content_type='text/plain; charset=utf-8')
     else:
         return Response("Event not Allowed", content_type='text/plain; charset=utf-8')
 
