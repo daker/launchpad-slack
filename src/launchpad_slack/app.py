@@ -2,6 +2,7 @@
 
 from flask import Flask, request, Response, redirect
 from utils import lp_login, _sort
+import settings
 
 import os
 import simplejson
@@ -13,19 +14,17 @@ ALLOWED_EVENTS = [
     'bzr:push:0.1',
     'git:push:0.1',
     'merge-proposal:0.1',
-    'ping'
 ]
 
 
 @app.route('/webhook', methods=['post'])
-def webhooks():
-    # print request.json
+def webhook():
     lp_event = request.headers.get('X-Launchpad-Event-Type')
     if lp_event is not None and lp_event in ALLOWED_EVENTS:
-        webhook = "https://hooks.slack.com/services/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"
-        username = 'Launchpad'
-        icon_url = "https://launchpadlibrarian.net/50084288/launchpad-logo"
-        channel = "#random"
+        webhook = settings.INCOMING_WEBHOOKS
+        username = settings.SLACK_USERNAME
+        icon_url = settings.SLACK_ICON_URL
+        channel = settings.SLACK_CHANNEL
         project_name = "Launchpad Slack"
 
         fields = []
