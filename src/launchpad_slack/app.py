@@ -51,9 +51,25 @@ def webhook():
                 request.json['git_repository'], request.json['commit_sha1'])
 
         if lp_event == 'merge-proposal:0.1':
-            print request.json
-            title = "Merge request has been proposed by %s" % request.json['registrant']
-            title_link = "%s" % request.json['merge_proposal']
+            merge_proposal = request.json['merge_proposal']
+            action = request.json['action']
+
+            registrant = request.json['new']['registrant']
+            description = request.json['new']['description']
+            commit_message = request.json['new']['commit_message']
+
+            old_queue_status = request.json['old']['queue_status']
+            new_queue_status = request.json['new']['queue_status']
+
+            if action == "created":
+                title = "Merge request has been proposed by %s" % registrant
+            if action == "modified":
+                if new_queue_status == "Approved":
+                    title = "Merge request has been approved"
+                if new_queue_status == "Merged":
+                    title = "Merge request has been merged"
+
+            title_link = "%s" % merge_proposal
 
         payload = {
             'parse': 'none',
