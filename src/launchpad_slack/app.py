@@ -26,7 +26,7 @@ COLORS_yellow = '#f1c40f'
 def webhook():
     lp_event = request.headers.get('X-Launchpad-Event-Type')
     if lp_event is not None and lp_event in ALLOWED_EVENTS:
-        webhook = settings.INCOMING_WEBHOOKS
+        webhook = settings.SLACK_INCOMING_WEBHOOKS
         username = settings.SLACK_USERNAME
         icon_url = settings.SLACK_ICON_URL
         channel = settings.SLACK_CHANNEL
@@ -51,7 +51,8 @@ def webhook():
                 request.json['git_repository'], request.json['commit_sha1'])
 
         if lp_event == 'merge-proposal:0.1':
-            title = "Merge request has been proposed by %s" % request.json['registrant']
+            title = "Merge request has been proposed by %s" % request.json[
+                'registrant']
             title_link = "%s" % request.json['merge_proposal']
 
         payload = {
