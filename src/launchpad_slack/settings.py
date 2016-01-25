@@ -8,5 +8,5 @@ SLACK_ICON_URL = "https://launchpadlibrarian.net/50084288/launchpad-logo"
 SLACK_PROJECT_NAME = "Launchpad Slack"
 
 for key in os.environ:
-    if key[:3] == 'SLACK_':
+    if key[:6] == 'SLACK_':
         globals()[key] = os.environ[key]
