@@ -73,6 +73,7 @@ def webhook():
                     title = "Merge request has been approved"
                 if new_queue_status == "Merged":
                     title = "Merge request has been merged"
+                text = commit_message
 
             title_link = "%s" % merge_proposal
 
@@ -84,6 +85,7 @@ def webhook():
                 'title_link': title_link,
                 'author_name': author_name or None,
                 'author_link': author_link or None,
+                'text': commit_message or None,
                 'color': "#36a64f",
                 'fields': fields,
             }]
