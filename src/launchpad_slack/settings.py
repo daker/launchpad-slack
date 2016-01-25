@@ -9,5 +9,4 @@ SLACK_PROJECT_NAME = "Launchpad Slack"
 
 for key in os.environ:
     if key[:3] == 'SLACK_':
-        name = key[3:]
-        globals()[name] = os.environ[key]
+        globals()[key] = os.environ[key]
