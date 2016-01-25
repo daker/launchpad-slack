@@ -34,6 +34,8 @@ def webhook():
 
         author_name = None
         author_link = None
+        commit_message = None
+        description = None
 
         fields = []
 
@@ -44,12 +46,12 @@ def webhook():
         })
 
         if lp_event == 'bzr:push:0.1':
-            title = "New bzr commit has been pushed"
+            pretext = "New bzr commit has been pushed"
             title_link = "http://bazaar.launchpad.net/%s/revision/%s" % (
                 request.json['bzr_branch_path'], request.json['new']['revision_id'])
 
         if lp_event == 'git:push:0.1':
-            title = "New git commit has been pushed"
+            pretext = "New git commit has been pushed"
             title_link = "https://git.launchpad.net/%s/commit/?id=%s" % (
                 request.json['git_repository'], request.json['commit_sha1'])
 
@@ -60,34 +62,33 @@ def webhook():
             registrant = request.json['new']['registrant']
             description = request.json['new']['description']
             commit_message = request.json['new']['commit_message']
-
-            old_queue_status = request.json['old']['queue_status']
             new_queue_status = request.json['new']['queue_status']
 
             if action == "created":
-                title = "Merge request has been proposed" % registrant
+                pretext = "Merge request has been proposed" % registrant
                 author_name = "%" % registrant[2:]
                 author_link = "https://launchpad.net%s" % registrant
 
             if action == "modified":
                 if new_queue_status == "Needs review":
-                    title = "Merge request has been updated"
+                    pretext = "Merge request has been updated"
                 if new_queue_status == "Approved":
-                    title = "Merge request has been approved"
+                    pretext = "Merge request has been approved"
                 if new_queue_status == "Merged":
-                    title = "Merge request has been merged"
+                    pretext = "Merge request has been merged"
 
             title_link = "%s" % merge_proposal
 
         payload = {
             'parse': 'none',
             'attachments': [{
-                'fallback': '[%s] %s' % (project_name, title),
-                'title': title,
+                'fallback': '[%s] %s' % (project_name, pretext),
+                'pretext': pretext,
+                'title': commit_message or None,
                 'title_link': title_link,
                 'author_name': author_name or None,
                 'author_link': author_link or None,
-                'text': commit_message or None,
+                'text': description or None,
                 'color': "#36a64f",
                 'fields': fields,
             }]
