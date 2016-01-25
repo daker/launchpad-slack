@@ -51,8 +51,8 @@ def webhook():
                 request.json['git_repository'], request.json['commit_sha1'])
 
         if lp_event == 'merge-proposal:0.1':
-            title = "Merge request has been proposed by %s" % request.json[
-                'registrant']
+            print request.json
+            title = "Merge request has been proposed by %s" % request.json['registrant']
             title_link = "%s" % request.json['merge_proposal']
 
         payload = {
