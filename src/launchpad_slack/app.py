@@ -62,8 +62,13 @@ def webhook():
             new_queue_status = request.json['new']['queue_status']
 
             if action == "created":
-                title = "Merge request has been proposed by %s" % registrant
+                title = "Merge request has been proposed" % registrant
+                author_name = "%" % registrant[2:]
+                author_link = "https://launchpad.net%s" % registrant
+
             if action == "modified":
+                if new_queue_status == "Needs review":
+                    title = "Merge request has been updated"
                 if new_queue_status == "Approved":
                     title = "Merge request has been approved"
                 if new_queue_status == "Merged":
@@ -77,6 +82,8 @@ def webhook():
                 'fallback': '[%s] %s' % (project_name, title),
                 'title': title,
                 'title_link': title_link,
+                'author_name': author_name or None,
+                'author_link': author_link or None,
                 'color': "#36a64f",
                 'fields': fields,
             }]
