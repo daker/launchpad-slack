@@ -32,6 +32,9 @@ def webhook():
         channel = settings.SLACK_CHANNEL
         project_name = settings.SLACK_PROJECT_NAME
 
+        author_name = None
+        author_link = None
+
         fields = []
 
         fields.append({
@@ -73,7 +76,6 @@ def webhook():
                     title = "Merge request has been approved"
                 if new_queue_status == "Merged":
                     title = "Merge request has been merged"
-                text = commit_message
 
             title_link = "%s" % merge_proposal
 
