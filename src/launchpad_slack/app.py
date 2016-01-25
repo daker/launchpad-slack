@@ -66,7 +66,7 @@ def webhook():
 
             if action == "created":
                 pretext = "Merge request has been proposed"
-                author_name = "%" % registrant[2:]
+                author_name = "%s" % registrant[2:]
                 author_link = "https://launchpad.net%s" % registrant
 
             if action == "modified":
