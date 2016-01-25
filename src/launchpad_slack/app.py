@@ -16,6 +16,11 @@ ALLOWED_EVENTS = [
     'merge-proposal:0.1',
 ]
 
+COLORS_RED = '#e74c3c'
+COLORS_green = '#2ecc71'
+COLORS_blue = '#3498db'
+COLORS_yellow = '#f1c40f'
+
 
 @app.route('/webhook', methods=['post'])
 def webhook():
@@ -25,7 +30,7 @@ def webhook():
         username = settings.SLACK_USERNAME
         icon_url = settings.SLACK_ICON_URL
         channel = settings.SLACK_CHANNEL
-        project_name = "Launchpad Slack"
+        project_name = settings.SLACK_PROJECT_NAME
 
         fields = []
 
@@ -46,7 +51,7 @@ def webhook():
                 request.json['git_repository'], request.json['commit_sha1'])
 
         if lp_event == 'merge-proposal:0.1':
-            title = "New merge request has been proposed"
+            title = "Merge request has been proposed by %s" % request.json['registrant']
             title_link = "%s" % request.json['merge_proposal']
 
         payload = {
