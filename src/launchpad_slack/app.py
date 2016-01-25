@@ -65,7 +65,7 @@ def webhook():
             new_queue_status = request.json['new']['queue_status']
 
             if action == "created":
-                pretext = "Merge request has been proposed" % registrant
+                pretext = "Merge request has been proposed"
                 author_name = "%" % registrant[2:]
                 author_link = "https://launchpad.net%s" % registrant
 
