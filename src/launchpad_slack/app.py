@@ -76,7 +76,7 @@ def webhook():
 
             fields.append({
                 'title': 'Author',
-                'value': "%s" % registrant[2:],
+                'value': "<%s|%s>" % (registrant, registrant[2:]),
                 'short': True,
             })
 
