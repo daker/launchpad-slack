@@ -76,8 +76,11 @@ def webhook():
                 'short': True,
             })
 
-            author_name = "%s" % registrant[2:]
-            author_link = "https://launchpad.net%s" % registrant
+            fields.append({
+                'title': 'Author',
+                'value': "%s" % registrant[2:],
+                'short': True,
+            })
 
             if action == "created":
                 pretext = "Merge request has been proposed"
@@ -108,8 +111,6 @@ def webhook():
                 'pretext': pretext,
                 'title': commit_message or description or None,
                 'title_link': title_link,
-                'author_name': author_name or None,
-                'author_link': author_link or None,
                 'text': description or None,
                 'color': color,
                 'fields': fields,
