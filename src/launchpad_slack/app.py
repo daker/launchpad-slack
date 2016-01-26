@@ -96,7 +96,7 @@ def webhook():
                     pretext = "Merge request has been approved"
                     color = COLOR_GREEN
                 if new_queue_status == "Merged":
-                    pretext = "Merge request has been merged"
+                    pretext = "Branch has been merged"
                     color = COLOR_GREEN
                 if new_queue_status == "Rejected":
                     pretext = "Merge request has been rejected"
