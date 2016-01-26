@@ -67,6 +67,8 @@ def webhook():
 
             if old_queue_status:
                 status = u"%s → %s" % (old_queue_status, new_queue_status)
+            else:
+                status = u"%s" % new_queue_status
 
             fields.append({
                 'title': 'Status',
@@ -82,7 +84,7 @@ def webhook():
                 color = COLOR_BLUE
             if action == "modified":
                 if new_queue_status == "Work in progress":
-                    pretext = "Merge request has been marked as"
+                    pretext = "Merge request has been marked as WIP"
                     color = COLOR_BLUE
                 if new_queue_status == "Needs review":
                     pretext = "Merge request has been updated"
