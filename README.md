@@ -27,7 +27,7 @@ Once the app is deployed, under your app settings you need to add ```SLACK_INCOM
 ## Setting up a webhook in Launchpad
 Copy the heroku app url, then go to your branch page in Launchpad.net, click on "Manage webhooks" then "Add webhook" and finally make sure the url looks something like the following :
 
-```https://<HEROKU_APP_NAME>.herokuapp.com/webhook```
+```https://HEROKU_APP_NAME.herokuapp.com/webhook```
 
 ## Contributing
 
