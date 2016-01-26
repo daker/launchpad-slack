@@ -5,7 +5,6 @@ import os
 SLACK_USERNAME = "Launchpad"
 SLACK_CHANNEL = "#random"
 SLACK_ICON_URL = "https://launchpadlibrarian.net/50084288/launchpad-logo"
-SLACK_PROJECT_NAME = "Launchpad Slack"
 
 for key in os.environ:
     if key[:6] == 'SLACK_':

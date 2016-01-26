@@ -26,14 +26,12 @@ COLOR_YELLOW = '#f1c40f'
 def webhook():
     lp_event = request.headers.get('X-Launchpad-Event-Type')
     if lp_event is not None and lp_event in ALLOWED_EVENTS:
+        # Settings
         webhook = settings.SLACK_INCOMING_WEBHOOKS
         username = settings.SLACK_USERNAME
         icon_url = settings.SLACK_ICON_URL
         channel = settings.SLACK_CHANNEL
-        project_name = settings.SLACK_PROJECT_NAME
 
-        author_name = None
-        author_link = None
         commit_message = None
         description = None
         old_queue_status = None
@@ -107,11 +105,11 @@ def webhook():
         payload = {
             'parse': 'none',
             'attachments': [{
-                'fallback': '[%s] %s' % (project_name, pretext),
-                'pretext': pretext,
+                'fallback': u'%s' % pretext,
+                'pretext': u'%s' % pretext,
                 'title': commit_message or description or None,
                 'title_link': title_link,
-                'text': description or None,
+                'text': "%s" % description or None,
                 'color': color,
                 'fields': fields,
             }]
