@@ -74,10 +74,11 @@ def webhook():
                 'short': True,
             })
 
+            author_name = "%s" % registrant[2:]
+            author_link = "https://launchpad.net%s" % registrant
+
             if action == "created":
                 pretext = "Merge request has been proposed"
-                author_name = "%s" % registrant[2:]
-                author_link = "https://launchpad.net%s" % registrant
                 color = COLOR_BLUE
             if action == "modified":
                 if new_queue_status == "Needs review":
