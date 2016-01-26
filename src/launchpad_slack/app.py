@@ -94,7 +94,7 @@ def webhook():
                     pretext = "Merge request has been rejected"
                     color = COLOR_RED
 
-            title_link = "%s" % merge_proposal
+            title_link = "https://code.launchpad.net%s" % merge_proposal
 
         payload = {
             'parse': 'none',
