@@ -132,9 +132,9 @@ def webhook():
         return Response("Event not Allowed", content_type='text/plain; charset=utf-8')
 
 
-@app.route('/lp', methods=['get'])
+@app.route('/lp', methods=['get', 'post'])
 def lp():
-    id = int(request.values.get('bug'))
+    id = int(request.values.get('text'))
     lp = lp_login()
     if not lp:
         return Response('Error.',
