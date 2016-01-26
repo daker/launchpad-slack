@@ -1,5 +1,5 @@
 {
-  "name": "Launchpad Integration for Slack",
+  "name": "launchpad-slack",
   "description": "This integration will post commits, merge requests to a channel in Slack.",
   "logo": "https://launchpadlibrarian.net/50084288/launchpad-logo",
   "image": "heroku/python",
