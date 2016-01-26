@@ -16,10 +16,10 @@ ALLOWED_EVENTS = [
     'merge-proposal:0.1',
 ]
 
-COLORS_RED = '#e74c3c'
-COLORS_green = '#2ecc71'
-COLORS_blue = '#3498db'
-COLORS_yellow = '#f1c40f'
+COLOR_RED = '#e74c3c'
+COLOR_GREEN = '#2ecc71'
+COLOR_BLUE = '#3498db'
+COLOR_YELLOW = '#f1c40f'
 
 
 @app.route('/webhook', methods=['post'])
@@ -36,14 +36,9 @@ def webhook():
         author_link = None
         commit_message = None
         description = None
+        color = COLOR_YELLOW
 
         fields = []
-
-        fields.append({
-            'title': 'Project',
-            'value': project_name,
-            'short': True,
-        })
 
         if lp_event == 'bzr:push:0.1':
             pretext = "New bzr commit has been pushed"
@@ -64,18 +59,30 @@ def webhook():
             commit_message = request.json['new']['commit_message']
             new_queue_status = request.json['new']['queue_status']
 
+            fields.append({
+                'title': 'Status',
+                'value': new_queue_status,
+                'short': True,
+            })
+
             if action == "created":
                 pretext = "Merge request has been proposed"
                 author_name = "%s" % registrant[2:]
                 author_link = "https://launchpad.net%s" % registrant
-
+                color = COLOR_BLUE
             if action == "modified":
                 if new_queue_status == "Needs review":
                     pretext = "Merge request has been updated"
+                    color = COLOR_YELLOW
                 if new_queue_status == "Approved":
                     pretext = "Merge request has been approved"
+                    color = COLOR_GREEN
                 if new_queue_status == "Merged":
                     pretext = "Merge request has been merged"
+                    color = COLOR_GREEN
+                if new_queue_status == "Rejected":
+                    pretext = "Merge request has been rejected"
+                    color = COLOR_RED
 
             title_link = "%s" % merge_proposal
 
@@ -89,7 +96,7 @@ def webhook():
                 'author_name': author_name or None,
                 'author_link': author_link or None,
                 'text': description or None,
-                'color': "#36a64f",
+                'color': color,
                 'fields': fields,
             }]
         }
