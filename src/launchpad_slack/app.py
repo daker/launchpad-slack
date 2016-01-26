@@ -36,6 +36,7 @@ def webhook():
         author_link = None
         commit_message = None
         description = None
+        old_queue_status = None
         color = COLOR_YELLOW
 
         fields = []
@@ -57,11 +58,19 @@ def webhook():
             registrant = request.json['new']['registrant']
             description = request.json['new']['description']
             commit_message = request.json['new']['commit_message']
+
+            try:
+                old_queue_status = request.json['old']['queue_status']
+            except KeyError:
+                pass
             new_queue_status = request.json['new']['queue_status']
+
+            if old_queue_status:
+                status = "%s → %s" % (old_queue_status, new_queue_status)
 
             fields.append({
                 'title': 'Status',
-                'value': new_queue_status,
+                'value': status,
                 'short': True,
             })
 
@@ -91,7 +100,7 @@ def webhook():
             'attachments': [{
                 'fallback': '[%s] %s' % (project_name, pretext),
                 'pretext': pretext,
-                'title': commit_message or None,
+                'title': commit_message or description or None,
                 'title_link': title_link,
                 'author_name': author_name or None,
                 'author_link': author_link or None,
