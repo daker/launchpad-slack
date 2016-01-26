@@ -33,6 +33,21 @@ Copy the heroku app url, then go to your branch page in Launchpad.net, click on 
 https://HEROKU_APP_NAME.herokuapp.com/webhook
 ```
 
+## Setting up a Slash Command
+You can also use Slash Commands to check bugs on Launchpad, under your app settings you need to add a ```SLACK_COMMANDS_TOKEN``` entry to the Config Variables section which hold the Slash Command token and finally make sure the url looks something like the following :
+
+```
+https://HEROKU_APP_NAME.herokuapp.com/lp
+```
+
+and use it like this :
+
+```
+/YOUR_SLASH_COMMAND BUG_ID
+
+ex : /lp 100000
+```
+
 ## Contributing
 
 1. Fork it

@@ -135,6 +135,12 @@ def webhook():
 @app.route('/lp', methods=['get', 'post'])
 def lp():
     id = int(request.values.get('text'))
+    token = request.values.get('token')
+
+    if settings.SLACK_COMMANDS_TOKEN and settings.SLACK_COMMANDS_TOKEN != token:
+        return Response('Not Allowed.',
+                        content_type='text/plain; charset=utf-8')
+
     lp = lp_login()
     if not lp:
         return Response('Error.',
