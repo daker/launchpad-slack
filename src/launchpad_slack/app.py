@@ -66,7 +66,7 @@ def webhook():
             new_queue_status = request.json['new']['queue_status']
 
             if old_queue_status:
-                status = "%s → %s" % (old_queue_status, new_queue_status)
+                status = u"%s → %s" % (old_queue_status, new_queue_status)
 
             fields.append({
                 'title': 'Status',
