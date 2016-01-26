@@ -41,6 +41,8 @@ def webhook():
 
         fields = []
 
+        print request.json
+
         if lp_event == 'bzr:push:0.1':
             pretext = "New bzr commit has been pushed"
             title_link = "http://bazaar.launchpad.net/%s/revision/%s" % (
